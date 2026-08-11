@@ -427,3 +427,27 @@ section{position:relative}
 .ph-tile.light{background:repeating-linear-gradient(135deg, rgba(13,11,10,.035) 0 12px, rgba(13,11,10,.06) 12px 24px);border-color:rgba(13,11,10,.18);color:rgba(13,11,10,.5)}
 .ph-hero{position:absolute;inset:0;background:linear-gradient(135deg,#1c1815,#0d0b0a)}
 .ph-avatar{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);border:1px dashed rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ===== Corporate style pass — aliniere mai apropiata de rufmontaj.ro (WordPress, fundal deschis, corporate) ===== */
+:root{
+  --ink:#0E2A44;      /* bleumarin corporate in loc de negru premium */
+  --ink-2:#123252;
+  --ink-3:#173D63;
+  --gold:var(--terra-2); /* eliminam accentul auriu boutique, folosim rosu-caramiziu peste tot */
+}
+/* Eliminam accentele "agentie boutique": cursor custom si textura de film grain */
+.cursor{display:none!important}
+.grain{display:none!important}
+
+/* Accente <em> fara italic serif editorial — bold, sans, mai corporate */
+.hero h1 em,
+.display em,
+.sec-dark .display em,
+.stat-n em,
+.cta-big h2 em{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-style:normal;
+  font-weight:800;
+  color:var(--terra-2);
+}
+.rev-quote{font-family:'Inter',sans-serif;font-style:normal}
