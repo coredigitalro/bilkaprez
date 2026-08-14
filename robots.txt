@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://DOMENIUL-TAU.ro/sitemap.xml
