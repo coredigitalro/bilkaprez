@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://montaj-acoperis-top.ro/sitemap.xml
