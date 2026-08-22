@@ -1,16 +1,10 @@
 {
   "name": "BilkaRoofMontaj",
   "short_name": "BilkaRoofMontaj",
-  "description": "Constructii, montaj si reparatii acoperisuri, dulgherie si hidroizolatii la nivel national.",
-  "icons": [
-    {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
-    }
-  ],
-  "theme_color": "#0D0B0A",
-  "background_color": "#0D0B0A",
+  "description": "Înlocuire, montaj și reparații acoperișuri, dulgherie și hidroizolații, la nivel național.",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }],
+  "theme_color": "#c43a17",
+  "background_color": "#ffffff",
   "display": "standalone",
   "start_url": "/",
   "lang": "ro"
