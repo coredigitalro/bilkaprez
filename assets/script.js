@@ -1,8 +1,31 @@
-/* BilkaRoofMontaj — script */
+/* Montaj Acoperis Top — script */
 (function () {
   "use strict";
   var TEL = "0758680276";
   var WA = "40758680276";
+
+  /* ---------- Google Ads conversion tracking ---------- */
+  var GADS_ID = "AW-18389001468";
+  var GADS_LABEL_CALL = "Ksf9CNnYm-wcEPzJx8BE";
+  var GADS_LABEL_CONTACT = "aHHpCOCQnewcEPzJx8BE"; /* WhatsApp + formular */
+
+  function trackConversion(label) {
+    if (typeof gtag === "function") {
+      gtag("event", "conversion", { send_to: GADS_ID + "/" + label });
+    }
+  }
+
+  /* click pe orice link de telefon, oriunde pe site */
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="tel:"]');
+    if (a) trackConversion(GADS_LABEL_CALL);
+  });
+
+  /* click pe orice link direct de WhatsApp (wa.me), oriunde pe site */
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href*="wa.me/"]');
+    if (a) trackConversion(GADS_LABEL_CONTACT);
+  });
 
   /* ---------- header ---------- */
   var hdr = document.querySelector(".hdr");
@@ -95,7 +118,9 @@
     });
   }
 
-  /* ---------- lead forms -> WhatsApp ---------- */
+  /* ---------- lead forms -> email (Web3Forms) ---------- */
+  var WEB3FORMS_ACCESS_KEY = "PASTE_ACCESS_KEY_HERE"; /* de la web3forms.com, cont bilkaroofmasters@gmail.com */
+
   function val(form, name) {
     var f = form.querySelector('[name="' + name + '"]');
     return f ? f.value.trim() : "";
@@ -124,17 +149,40 @@
       }
       if (err) err.classList.remove("show");
 
-      var t = "Buna ziua! Solicit o oferta pentru lucrari la acoperis.\n";
-      t += "Nume: " + nume + "\n";
-      t += "Telefon: " + tel + "\n";
-      t += "Localitate / judet: " + oras + "\n";
-      if (lucrare) t += "Lucrare: " + lucrare + "\n";
-      if (mesaj) t += "Detalii: " + mesaj + "\n";
-      t += "(trimis de pe montaj-acoperis-top.ro)";
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
 
-      if (ok) ok.classList.add("show");
-      window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
-      form.reset();
+      var payload = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: "Solicitare ofertă — montaj-acoperis-top.ro",
+        from_name: nume,
+        Nume: nume,
+        Telefon: tel,
+        "Localitate / județ": oras
+      };
+      if (lucrare) payload["Lucrare"] = lucrare;
+      if (mesaj) payload["Detalii"] = mesaj;
+
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (btn) btn.disabled = false;
+          if (data.success) {
+            if (ok) ok.classList.add("show");
+            trackConversion(GADS_LABEL_CONTACT);
+            form.reset();
+          } else if (err) {
+            err.classList.add("show");
+          }
+        })
+        .catch(function () {
+          if (btn) btn.disabled = false;
+          if (err) err.classList.add("show");
+        });
     });
   });
 
@@ -253,26 +301,47 @@
       if (nume.length < 2 || !phoneOk(tel) || oras.length < 2) return showErr(box);
       hideErr(box);
 
-      var t = "Buna ziua! Am folosit calculatorul de pret de pe montaj-acoperis-top.ro.\n";
-      t += "Lucrare: " + (state.lucrare || "-") + "\n";
-      t += "Forma acoperisului: " + (state.forma || "-") + "\n";
-      t += "Invelitoare actuala: " + (state.invelitoare || "-") + "\n";
-      t += "Suprafata estimata: " + (state.mp ? state.mp + " mp" : "-") + "\n";
-      t += "Nume: " + nume + "\n";
-      t += "Telefon: " + tel + "\n";
-      t += "Localitate / judet: " + oras;
+      var cbtn = cform.querySelector('button[type="submit"]');
+      if (cbtn) cbtn.disabled = true;
 
-      window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
-      calc.querySelector(".prog").style.display = "none";
-      if (progLbl) progLbl.style.display = "none";
-      stepEls.forEach(function (s) { s.classList.remove("on"); });
-      var done = document.getElementById("calcDone");
-      if (done) {
-        done.classList.add("on");
-        var sum = done.querySelector("#doneSum");
-        if (sum) sum.textContent = state.mp ? "Suprafata estimata: " + state.mp + " m²" : "";
-      }
-      window.scrollTo({ top: calc.getBoundingClientRect().top + window.scrollY - 90, behavior: "smooth" });
+      var payload = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: "Calculator preț — montaj-acoperis-top.ro",
+        from_name: nume,
+        Nume: nume,
+        Telefon: tel,
+        "Localitate / județ": oras,
+        Lucrare: state.lucrare || "-",
+        "Formă acoperiș": state.forma || "-",
+        "Învelitoare actuală": state.invelitoare || "-",
+        "Suprafață estimată": state.mp ? state.mp + " m²" : "-"
+      };
+
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (cbtn) cbtn.disabled = false;
+          if (!data.success) return showErr(box);
+          trackConversion(GADS_LABEL_CONTACT);
+          calc.querySelector(".prog").style.display = "none";
+          if (progLbl) progLbl.style.display = "none";
+          stepEls.forEach(function (s) { s.classList.remove("on"); });
+          var done = document.getElementById("calcDone");
+          if (done) {
+            done.classList.add("on");
+            var sum = done.querySelector("#doneSum");
+            if (sum) sum.textContent = state.mp ? "Suprafata estimata: " + state.mp + " m²" : "";
+          }
+          window.scrollTo({ top: calc.getBoundingClientRect().top + window.scrollY - 90, behavior: "smooth" });
+        })
+        .catch(function () {
+          if (cbtn) cbtn.disabled = false;
+          showErr(box);
+        });
     });
   }
 })();

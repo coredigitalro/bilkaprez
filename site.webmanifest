@@ -1,6 +1,6 @@
 {
-  "name": "BilkaRoofMontaj",
-  "short_name": "BilkaRoofMontaj",
+  "name": "Montaj Acoperis Top",
+  "short_name": "Montaj Acoperis Top",
   "description": "Înlocuire, montaj și reparații acoperișuri, dulgherie și hidroizolații, la nivel național.",
   "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }],
   "theme_color": "#c43a17",
