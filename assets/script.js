@@ -119,7 +119,7 @@
   }
 
   /* ---------- lead forms -> email (Web3Forms) ---------- */
-  var WEB3FORMS_ACCESS_KEY = "PASTE_ACCESS_KEY_HERE"; /* de la web3forms.com, cont bilkaroofmasters@gmail.com */
+  var WEB3FORMS_ACCESS_KEY = "20951182-c1c9-4db0-b512-f0df7501d701"; /* de la web3forms.com, cont bilkaroofmasters@gmail.com */
 
   function val(form, name) {
     var f = form.querySelector('[name="' + name + '"]');
