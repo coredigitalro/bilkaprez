@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" class="is-loading">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,6 +30,16 @@
 </script>
 </head>
 <body>
+<div class="loader" id="loader" aria-hidden="true">
+  <svg viewBox="0 0 32 32" fill="none">
+    <path class="roof" d="M5 17 L16 7 L27 17" stroke="#C94A1B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="wall" d="M8.5 15.5 L8.5 25 L23.5 25 L23.5 15.5" stroke="#F6F1EA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <line class="tile" x1="12.5" y1="11.3" x2="19.5" y2="11.3" stroke="#F6F1EA" stroke-width="1.6" stroke-linecap="round"/>
+    <line class="tile" x1="10.3" y1="14.1" x2="21.7" y2="14.1" stroke="#F6F1EA" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
+</div>
+<noscript><style>html.is-loading{overflow:visible!important}.loader{display:none!important}</style></noscript>
+
 <div class="topbar"><div class="wrap">
   <span>Acoperire națională · <b>Deplasare și deviz gratuit</b></span>
   <span class="tb-r"><span>Program non-stop pentru urgențe</span><span>20+ ani de experiență</span></span>

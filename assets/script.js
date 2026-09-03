@@ -4,6 +4,31 @@
   var TEL = "0758680276";
   var WA = "40758680276";
 
+  /* ---------- loading screen ---------- */
+  (function () {
+    var loader = document.getElementById("loader");
+    if (!loader) return;
+    var MIN_MS = 650;
+    var MAX_MS = 1800;
+    var started = Date.now();
+    var done = false;
+    function hide() {
+      if (done) return;
+      done = true;
+      var wait = Math.max(0, MIN_MS - (Date.now() - started));
+      setTimeout(function () {
+        loader.classList.add("hide");
+        document.documentElement.classList.remove("is-loading");
+        setTimeout(function () {
+          if (loader.parentNode) loader.parentNode.removeChild(loader);
+        }, 450);
+      }, wait);
+    }
+    if (document.readyState === "complete") hide();
+    else window.addEventListener("load", hide);
+    setTimeout(hide, MAX_MS);
+  })();
+
   /* ---------- Google Ads conversion tracking ---------- */
   var GADS_ID = "AW-18389001468";
   var GADS_LABEL_CALL = "Ksf9CNnYm-wcEPzJx8BE";
